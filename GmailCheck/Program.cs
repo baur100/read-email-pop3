@@ -6,16 +6,18 @@ using OpenPop.Pop3;
 
 namespace GmailCheck
 {
-    class Program
+    internal class Program
     {
-        private static Pop3Client client = new Pop3Client();
-        static void Main(string[] args)
+        private static readonly Pop3Client Client = new Pop3Client();
+        static void Main()
         {
-            client.Connect("pop.gmail.com", 995, true);
-            client.Authenticate("recent:email@gmail.com", "password");
-            for (var i = 1; i <= client.GetMessageCount(); i++)
+            Client.Connect("pop.gmail.com", 995, true);
+
+            Client.Authenticate("recent:email@gmail.com", "password");
+
+            for (var i = 1; i <= Client.GetMessageCount(); i++)
             {
-                Console.WriteLine(client.GetMessage(i).ToMailMessage().Body);
+                Console.WriteLine(Client.GetMessage(i).ToMailMessage().Body);
             }
             
             Console.ReadKey();
